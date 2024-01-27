@@ -1,8 +1,8 @@
-mat-sidenav-container {
-    height: 100%;
-}
-
-mat-sidenav {
-    width: 200px;
-    background-color: red;
+.support-screen {
+    background-color: #f3f3f3;
+    background-image: url('../../../assets/images/no-support/angular_bg.png');
+    background-position: 100px 100px;
+    background-repeat: no-repeat;
+    height: 100vh;
+    background-size: cover;
 }

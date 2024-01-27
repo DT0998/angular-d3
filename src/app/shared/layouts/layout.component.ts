@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterOutlet, RouterModule } from '@angular/router';
@@ -24,8 +24,19 @@ import { IRoutes } from '../models/models';
   styleUrl: './layout.component.scss',
 })
 export class LayoutComponent {
+  noSupportScreen: any;
   routes: IRoutes[];
   constructor() {
     this.routes = routes;
+    this.checkScreenWidth();
+  }
+  // check screen
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event): void {
+    this.checkScreenWidth();
+  }
+
+  private checkScreenWidth(): void {
+    this.noSupportScreen = window.innerWidth < 1024;
   }
 }
