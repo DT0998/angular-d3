@@ -15,7 +15,6 @@ export class BarChartComponent implements AfterViewInit {
     { framework: 'Ember', stars: '200', color: 'orange' },
     { framework: 'Angular', stars: '1000', color: 'red' },
     { framework: 'React', stars: '1900', color: 'blue' },
-    { framework: 'Backbone', stars: '500', color: 'gray' },
   ];
 
   svgChart: any;
@@ -26,6 +25,8 @@ export class BarChartComponent implements AfterViewInit {
 
   heightChart: any = 200 - this.margin.top - this.margin.bottom;
   widthChart: any = 450 - this.margin.left - this.margin.right;
+  barsChart: any;
+  yChart: any;
 
   constructor() {}
   ngAfterViewInit(): void {
@@ -70,24 +71,36 @@ export class BarChartComponent implements AfterViewInit {
       .style('text-anchor', 'middle');
 
     // Create the Y-axis band scale
-    const y = d3.scaleLinear().domain([0, 2000]).range([this.heightChart, 0]);
+    this.yChart = d3
+      .scaleLinear()
+      .domain([0, 2000])
+      .range([this.heightChart, 0]);
 
     // Draw the Y-axis on the DOM
-    this.svgChart.append('g').call(d3.axisLeft(y));
+    this.svgChart.append('g').call(d3.axisLeft(this.yChart));
 
     // Create and fill the bars
-    this.svgChart
+    this.barsChart = this.svgChart
       .selectAll('bars')
       .data(data)
       .enter()
       .append('rect')
-      .attr('x', (data: any) => x(data.framework))
-      .attr('y', (data: any) => y(data.stars))
       .attr('width', x.bandwidth())
-      .attr('height', (data: any) => this.heightChart - y(data.stars))
-      .attr('fill', (data: any) => data.color);
+      .attr('x', (data: any) => x(data.framework))
+      .attr('y', this.heightChart) // Start the bars from the bottom
+      .attr('height', 0) // Start with zero height
+      .attr('fill', (data: any) => data.color)
+      .transition() // Apply transition to subsequent changes
+      .duration(800) // Set the duration of the animation
+      .attr('y', (data: any) => this.yChart(data.stars))
+      .attr(
+        'height',
+        (data: any) => this.heightChart - this.yChart(data.stars)
+      );
   }
+
   // tool tip
+
   // legend
   createLegend(data: any[]): void {
     const legendContainer = d3.select('div#legend-bar-chart-basic');
@@ -117,6 +130,29 @@ export class BarChartComponent implements AfterViewInit {
       .text((data: any) => data.framework)
       .style('font-size', '20px')
       .style('color', '#333');
+
+    // Add click event listener to legend items
+    d3.selectAll('.legend').on('click', (event, data: any) => {
+      console.log('Clicked legend:', data);
+      const clickedFramework = data.framework;
+      const correspondingBar = this.barsChart.filter(
+        (barChartData: any) => barChartData.framework === clickedFramework
+      );
+      console.log('correspondingBar', correspondingBar);
+      // Toggle the bar's y-position
+      correspondingBar
+        .transition()
+        .duration(500)
+        .attr(
+          'y',
+          (barData: any) => {
+            console.log('barData', barData);
+          }
+          // barData.y === 0 ? this.yChart(barData.stars) : 0
+        )
+        .attr('height', (barData: any) =>
+          barData.y === 0 ? this.heightChart - this.yChart(barData.stars) : 0
+        );
+    });
   }
-  // animation
 }

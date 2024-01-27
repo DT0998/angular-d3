@@ -9,11 +9,10 @@ import { NavigationButtonComponent } from '../navigation-button/navigation-butto
   styleUrl: './stacked-area-chart.component.scss',
 })
 export class StackedAreaChartComponent {
-  private dataExample = [
-    { Framework: 'Vue', Stars: '166443', Released: '2014' },
-    { Framework: 'React', Stars: '150793', Released: '2013' },
-    { Framework: 'Angular', Stars: '62342', Released: '2016' },
-    { Framework: 'Backbone', Stars: '27647', Released: '2010' },
-    { Framework: 'Ember', Stars: '21471', Released: '2011' },
+  dataExample = [
+    { framework: 'Vue', stars: '1650', color: 'green' },
+    { framework: 'Ember', stars: '200', color: 'orange' },
+    { framework: 'Angular', stars: '1000', color: 'red' },
+    { framework: 'React', stars: '1900', color: 'blue' },
   ];
 }
