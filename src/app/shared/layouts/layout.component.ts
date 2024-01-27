@@ -36,7 +36,7 @@ export class LayoutComponent {
     this.checkScreenWidth();
   }
 
-  private checkScreenWidth(): void {
+  checkScreenWidth(): void {
     this.noSupportScreen = window.innerWidth < 1024;
   }
 }
