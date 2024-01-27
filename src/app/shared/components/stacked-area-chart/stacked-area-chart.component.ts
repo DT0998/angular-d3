@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
+import { NavigationButtonComponent } from '../navigation-button/navigation-button.component';
 
 @Component({
   selector: 'app-stacked-area-chart',
   standalone: true,
-  imports: [],
+  imports: [NavigationButtonComponent],
   templateUrl: './stacked-area-chart.component.html',
   styleUrl: './stacked-area-chart.component.scss',
 })

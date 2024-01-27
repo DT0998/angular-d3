@@ -1,18 +1,19 @@
 import { Component } from '@angular/core';
+import { NavigationButtonComponent } from '../navigation-button/navigation-button.component';
 
 @Component({
   selector: 'app-bar-chart',
   standalone: true,
-  imports: [],
+  imports: [NavigationButtonComponent],
   templateUrl: './bar-chart.component.html',
-  styleUrl: './bar-chart.component.scss'
+  styleUrl: './bar-chart.component.scss',
 })
 export class BarChartComponent {
   private dataExample = [
-    {"Framework": "Vue", "Stars": "166443", "Released": "2014"},
-    {"Framework": "React", "Stars": "150793", "Released": "2013"},
-    {"Framework": "Angular", "Stars": "62342", "Released": "2016"},
-    {"Framework": "Backbone", "Stars": "27647", "Released": "2010"},
-    {"Framework": "Ember", "Stars": "21471", "Released": "2011"},
+    { Framework: 'Vue', Stars: '166443', Released: '2014' },
+    { Framework: 'React', Stars: '150793', Released: '2013' },
+    { Framework: 'Angular', Stars: '62342', Released: '2016' },
+    { Framework: 'Backbone', Stars: '27647', Released: '2010' },
+    { Framework: 'Ember', Stars: '21471', Released: '2011' },
   ];
 }
